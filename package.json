@@ -1,0 +1,20 @@
+{
+    "name": "swaelo",
+    "version": "0.0.1",
+    "description": "swaelos discord bot",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "swaelo",
+    "ownerID": "181048966626934784",
+    "token": "NDg4NTU3MzM0Mzc3OTIyNTcw.DoI7xw.p_kzj4lfz856BSVZsPpAMKJ_M3s",
+    "dependencies": {
+        "choco": "^0.2.1",
+        "discord.js": "^11.4.2",
+        "discord.js-commando": "^0.10.0",
+        "ffmpeg": "0.0.4",
+        "opusscript": "0.0.6",
+        "ytdl-core": "^0.25.2"
+    }
+}
