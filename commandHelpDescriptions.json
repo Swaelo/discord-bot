@@ -1,0 +1,12 @@
+{
+    "join": "Forces the bot to join the same voice channel that you are in",
+    "leave": "Forces the bot to leave the voice channel it is currently in",
+    "lyrics": "Displays the lyrics for the song that is currently playing",
+    "pause": "Pauses the playback of the currently playing song",
+    "play": "Starts playing the provided song in the current voice channel.",
+    "queue": "Displays the current list of songs in the queue",
+    "remove": "Removes the given song from the queue",
+    "restart": "Restarts playback of the current song from the beginning",
+    "shuffle": "Mixes up the order of songs currently in the queue",
+    "skip": "Skips the current song, immediately starting whatever is next"
+}
