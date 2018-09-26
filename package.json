@@ -5,12 +5,13 @@
     "version": "0.0.1",
     "description": "swaelos discord bot",
     "main": "main.js",
+    "prefix": "*",
     "dependencies": {
-        "choco": "^0.2.1",
         "discord.js": "^11.4.2",
         "discord.js-commando": "^0.10.0",
         "ffmpeg": "0.0.4",
         "opusscript": "0.0.6",
+        "swaelos-youtube-validator": "^1.1.0",
         "ytdl-core": "^0.25.2"
     }
 }

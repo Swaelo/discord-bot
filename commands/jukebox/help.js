@@ -1,6 +1,7 @@
 const discord = require('discord.js');
 const commando = require('discord.js-commando');
 var commandHelpers = require('../../commandHelpDescriptions.json');
+var miscFunctions = require('../../miscFunctions.js');
 
 class Help extends commando.Command
 {
@@ -47,12 +48,10 @@ class Help extends commando.Command
     SpecificHelp(msg, args)
     {
         //Combine the arg back into a single word
-        var totalArg = '';
-        for(var i = 0; i < args.length; i++)
-            totalArg += args[i];
+        var combinedArgs = miscFunctions.combineArgs(args);
 
         //Now give the information they are looking for
-        switch(totalArg)
+        switch(combinedArgs)
         {
             case 'all':
                 this.DisplayCompleteCommandList(msg);
@@ -62,9 +61,6 @@ class Help extends commando.Command
                 return;
             case 'leave':
                 msg.channel.send(CreateEmbed('`*leave`', commandHelpers.leave));
-                return;
-            case 'lyrics':
-                msg.channel.send(CreateEmbed('`*lyrics`', commandHelpers.lyrics));
                 return;
             case 'pause':
                 msg.channel.send(CreateEmbed('`*pause`', commandHelpers.pause));
@@ -87,6 +83,12 @@ class Help extends commando.Command
             case 'skip':
                 msg.channel.send(CreateEmbed('`*skip`', commandHelpers.skip));
                 return;
+            case 'shutdown':
+                msg.channel.send(CreateEmbed('`*shutdown`', commandHelpers.shutdown));
+                return;
+            case 'move':
+                msg.channel.send(CreateEmbed('`*move`', commandHelpers.move));
+                return;
         }
 
         msg.channel.send('Sorry, I dont know anything about a ' + totalArg + ' command.');
@@ -96,25 +98,19 @@ class Help extends commando.Command
     {
         msg.channel.send({embed: {
             color: 3447003,
-            author: {
-                name: 'Available Commands'
-            },
-            title: '__**Jukebox**__',
-            fields: [{
-                name: "Moving Voice Channels",
-                value: "`*join *leave`"
+            title: '__**Available Commands**__',
+            fields: [
+            {
+                name: "Bot Control",
+                value: "`*join *leave *shutdown`"
             },
             {
-                name: "Controlling Music Playback",
+                name: "Music Playback",
                 value: "`*play *pause *restart`"
             },
             {
-                name: "Music Queue Control",
+                name: "Queue Control",
                 value: "`*queue *remove *shuffle *skip`"
-            },
-            {
-                name: "Misc",
-                value: "`*lyrics`"
             }]
         }});
     }

@@ -1,0 +1,12 @@
+{
+    "ErrorUserNotInVoice": "ERROR: You need to be in a voice channel to use that command.",
+    "ErrorBotNotInVoice": "ERROR: I need to already be connected to a voice channel to do that.",
+    "ErrorAlreadyInVoice": "ERROR: I'm already connected to a different voice channel, use the `*move` command to force me.",
+    "ErrorURLValidationFailure": "ERROR: URL validation failed, try again",
+    "JoinedVoice": "joined your voice channel.",
+    "LeftVoice": "left the voice channel.",
+    "AddedSong": "added song to the queue",
+    "PlayingSong": "playing your song",
+    "QueueFinish": "reached the end of the queue, no more songs to play, leaving voice",
+    "StartingNextSong": "playing the next song in the queue"
+}
