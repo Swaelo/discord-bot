@@ -19,5 +19,14 @@ bot.registry.registerCommandsIn(__dirname + "/commands");
 
 //Connect the bot to the server and signal our success
 bot.login(config.token)
-    .then(console.log('connected'))
+    .then(console.log('swaelo bot now running'))
     .catch(console.error);
+
+//Event Trigger when the bot connects to a server
+bot.on('ready', () =>
+{
+    bot.guilds.forEach((guild) =>
+    {
+        global.jukebox.AddServer(guild);
+    });
+});

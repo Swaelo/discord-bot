@@ -1,21 +1,21 @@
 const commando = require('discord.js-commando');
 
-class Queue extends commando.Command
+class List extends commando.Command
 {
     constructor(client)
     {
         super(client,{
-            name: 'queue',
+            name: 'list',
             group: 'jukebox',
-            memberName: 'queue',
+            memberName: 'list',
             description: 'Displays the current list of songs in the queue.'
         });
     }
 
     async run(message, args)
     {
-        global.jukebox.JukeboxQueue(message, args);
+        global.jukebox.JukeboxList(message, args);
     }
 }
 
-module.exports = Queue;
+module.exports = List;

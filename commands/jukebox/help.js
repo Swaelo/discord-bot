@@ -62,32 +62,32 @@ class Help extends commando.Command
             case 'leave':
                 msg.channel.send(CreateEmbed('`*leave`', commandHelpers.leave));
                 return;
+            case 'list':
+                msg.channel.send(CreateEmbed('`*list`', commandHelpers.list));
+                return;
             case 'pause':
                 msg.channel.send(CreateEmbed('`*pause`', commandHelpers.pause));
                 return;
             case 'play':
                 msg.channel.send(CreateEmbed('`*play <songname>` or `*play <youtube link>`', commandHelpers.play));
                 return;
-            case 'queue':
-                msg.channel.send(CreateEmbed('`*queue`', commandHelpers.queue));
-                return;
-            case 'remove':
-                msg.channel.send(CreateEmbed('`*remove <songname>` or `*remove <youtube link>`', commandHelpers.remove));
-                return;
             case 'restart':
                 msg.channel.send(CreateEmbed('`*restart`', commandHelpers.restart));
                 return;
-            case 'shuffle':
-                msg.channel.send(CreateEmbed('`*shuffle`', commandHelpers.shuffle));
+            case 'resume':
+                msg.channel.send(CreateEmbed('`*resume`', commandHelpers.resume));
                 return;
             case 'skip':
                 msg.channel.send(CreateEmbed('`*skip`', commandHelpers.skip));
                 return;
+            case 'stop':
+                msg.channel.send(CreateEmbed('`*stop`', commandHelpers.stop));
+                return;
             case 'shutdown':
                 msg.channel.send(CreateEmbed('`*shutdown`', commandHelpers.shutdown));
                 return;
-            case 'move':
-                msg.channel.send(CreateEmbed('`*move`', commandHelpers.move));
+            case 'serverinfo':
+                msg.channel.send(CreateEmbed('`*serverinfo`', commandHelpers.serverinfo));
                 return;
         }
 
@@ -105,12 +105,12 @@ class Help extends commando.Command
                 value: "`*join *leave *shutdown`"
             },
             {
-                name: "Music Playback",
-                value: "`*play *pause *restart`"
+                name: "Music",
+                value: "`*play *pause *resume *restart *skip *stop *list`"
             },
             {
-                name: "Queue Control",
-                value: "`*queue *remove *shuffle *skip`"
+                name: "Miscellanious",
+                value: "`*serverinfo`"
             }]
         }});
     }
