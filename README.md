@@ -17,9 +17,15 @@ keep running commands to set up libs
 `npm install opusscript`
 `npm install ytdl-core`
 `npm install swaelos-youtube-validator`  
+
+Currently working on adding some commands to the bot to check the current value of items on the steam community marketplace  
+The intent is to use the bot to assist in making profits through the shuffling of Trading Cards, Emotes, Backgrounds, Gems, Sacks of Gems and the crafting of whichever Booster Packs the bot tells you have the most value at the current time  
+Yarn is needed in order to install some of the other required libraries used to communicate with the steam marketplace, you can download and install yarn from the official yarn website at yarnpkg.com
+After yarn has been installed, reload your terminal and import the market pricing API with the following command  
+`yard add @node-steam/market-pricing`  
   
-now we have everything set up and we are ready to turn the bot on
-open your terminal to the bots directory and run `node .`, which will automatically find and detect the nearest package.json file
-contained within is all the information that node needs to run the bot correctly
-if you check discord you should now be able to see the bot connected to the server, staying there and interacting with everyone
-  until you close your terminal or the bot crashes or something
+now we should have everything set up correctly, and we are ready to turn the bot on  
+open your terminal to the bots directory and run `node .`, which will automatically find and detect the nearest package.json file  
+contained within is all the information that node needs to run the bot correctly  
+if you check discord you should now be able to see the bot connected to the server, staying there and interacting with everyone  
+  until you close your terminal or the bot crashes or something  
