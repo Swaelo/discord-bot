@@ -22,7 +22,7 @@ Currently working on adding some commands to the bot to check the current value 
 The intent is to use the bot to assist in making profits through the shuffling of Trading Cards, Emotes, Backgrounds, Gems, Sacks of Gems and the crafting of whichever Booster Packs the bot tells you have the most value at the current time  
 Yarn is needed in order to install some of the other required libraries used to communicate with the steam marketplace, you can download and install yarn from the official yarn website at yarnpkg.com
 After yarn has been installed, reload your terminal and import the market pricing API with the following command  
-`yard add @node-steam/market-pricing`  
+`yard add market-pricing`  
   
 now we should have everything set up correctly, and we are ready to turn the bot on  
 open your terminal to the bots directory and run `node .`, which will automatically find and detect the nearest package.json file  
