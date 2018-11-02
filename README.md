@@ -1,6 +1,7 @@
 # Swaelos Modular Discord Bot  
 **Prequisites**  
 Node.JS is required and can be downloaded from nodejs.org  
+  
 **How to use**  
 1. Clone this repo somewhere to your computer
 2. Open your terminal to the root directory of wherever you put the files
