@@ -9,3 +9,6 @@ Node.JS is required and can be downloaded from [nodejs.org](https://nodejs.org/)
 4. Head to the [Discord Developer Portal](https://discordapp.com/developers/applications/), select your application and copy your token from the Bot section of your application settings.  
 5. Open the auth.json file, and replace YOUR_BOT_TOKEN_HERE with the token you copied in the previous step, save the file
 6. Use node to run the bot from the terminal from the root directory by typing `node .` or instead you can execute the batch file I have included by typing `run` in the terminal, or double clicking on it from the file explorer
+
+The bot will output messages to the terminal letting you know if you did everything correctly.  
+If you are unsure that its working or not, check if the bot appears online in your server
