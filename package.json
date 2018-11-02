@@ -1,17 +1,12 @@
 {
-    "author": "swaelo",
-    "ownerID": "181048966626934784",
-    "token": "NDg4NTU3MzM0Mzc3OTIyNTcw.DoI7xw.p_kzj4lfz856BSVZsPpAMKJ_M3s",
-    "version": "0.0.1",
-    "description": "swaelos discord bot",
-    "main": "main.js",
-    "prefix": "*",
-    "dependencies": {
-        "discord.js": "^11.4.2",
-        "discord.js-commando": "^0.10.0",
-        "ffmpeg": "0.0.4",
-        "opusscript": "0.0.6",
-        "swaelos-youtube-validator": "^1.1.0",
-        "ytdl-core": "^0.25.2"
-    }
+  "name": "modular-discord-bot",
+  "version": "1.0.0",
+  "description": "the base for my modular discord bot project",
+  "main": "main.js",
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  },
+  "devDependencies": {},
+  "author": "swaelo",
+  "license": "MIT"
 }
