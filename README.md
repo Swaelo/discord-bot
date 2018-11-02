@@ -1,9 +1,3 @@
-IMPORTANT: Up until this current point I have been developing the bot as a learning activity so many things could be done in a much better way.  
-I am currently undertaking major efforts to rewrite and refactor most of the code, so expect this repo not to receive any updates for a week or two until that is completed.
-
-
-
-
 # -how to install and run-  
 ## the following instructions assume you have a fresh windows installation, follow the steps correctly and you should be fine
 visit the nodejs.org website so you can download and install the latest release version of node js  
