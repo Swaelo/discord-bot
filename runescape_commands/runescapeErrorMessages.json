@@ -1,0 +1,6 @@
+{
+    "InvalidCommand" : "ERROR: I dont know that command.",
+    "NoCommandSelected" : "ERROR: No command was selected, try using `*runescape help` if unsure",
+    "NoArgumentGiven" : "ERROR: No argument was given with your command selection",
+    "InvalidMaterialName" : "ERROR: No material with that name that I am aware of."
+}

@@ -10,5 +10,8 @@ global.CommandHandler = new BotCommandHandler.CommandHandler();
 var GeneralCommands = require(__dirname + '/general_commands/generalCommandGroup.js');
 global.CommandHandler.RegisterGroup(new GeneralCommands.GeneralCommandGroup());
 
+var RunescapeCommands = require(__dirname + '/runescape_commands/runescapeCommandGroup.js');
+global.CommandHandler.RegisterGroup(new RunescapeCommands.RunescapeCommandGroup());
+
 //everything is setup, now start the bot
 global.bot.Login();
