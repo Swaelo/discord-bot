@@ -1,0 +1,8 @@
+corn 0
+herb 0
+grape 0
+bush 0
+mushroom 0
+bloodwood 0
+magic 0
+palm 0

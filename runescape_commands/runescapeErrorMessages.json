@@ -2,5 +2,8 @@
     "InvalidCommand" : "ERROR: I dont know that command.",
     "NoCommandSelected" : "ERROR: No command was selected, try using `*runescape help` if unsure",
     "NoArgumentGiven" : "ERROR: No argument was given with your command selection",
-    "InvalidMaterialName" : "ERROR: No material with that name that I am aware of."
+    "InvalidMaterialName" : "ERROR: No material with that name that I am aware of.",
+    "TooManyArguments" : "ERROR: Too many arguments used with this command.",
+    "NotEnoughArguments" : "ERROR: Not enough arguments used with this command.",
+    "UnknownReminderType" : "ERROR: I don't know how to set that kind of reminder."
 }

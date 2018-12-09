@@ -6,10 +6,7 @@ global.bot = new BotClass.Bot();
 var BotCommandHandler = require(__dirname + '/commandHandler.js');
 global.CommandHandler = new BotCommandHandler.CommandHandler();
 
-//Add the desired command modules
-var GeneralCommands = require(__dirname + '/general_commands/generalCommandGroup.js');
-global.CommandHandler.RegisterGroup(new GeneralCommands.GeneralCommandGroup());
-
+//Runescape commands, currently used for quickly looking up best ways to find any invention material
 var RunescapeCommands = require(__dirname + '/runescape_commands/runescapeCommandGroup.js');
 global.CommandHandler.RegisterGroup(new RunescapeCommands.RunescapeCommandGroup());
 

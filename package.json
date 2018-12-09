@@ -4,7 +4,8 @@
   "description": "the base for my modular discord bot project",
   "main": "main.js",
   "dependencies": {
-    "discord.js": "^11.4.2"
+    "discord.js": "^11.4.2",
+    "fs": "0.0.1-security"
   },
   "devDependencies": {},
   "author": "swaelo",

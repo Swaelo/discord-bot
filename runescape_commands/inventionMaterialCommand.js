@@ -1,7 +1,6 @@
 var CommandClass = require(__dirname + '/../Command.js');
 var RunescapeErrorMessages = require(__dirname + '/RunescapeErrorMessages.json');
-var RunescapeCommandExamples = require(__dirname + '/runescapeCommandExamples.json');
-var InventionMaterialImages = require(__dirname + '/inventionMaterialImages.json');
+var InventionMaterialInformation = require(__dirname + '/inventionMaterialLinks.json');
 
 class InventionMaterialCommand extends CommandClass.Command
 {
@@ -58,90 +57,29 @@ class InventionMaterialCommand extends CommandClass.Command
 
     MaterialSearch(msg, args)
     {
-        //Give the correct information based on what arguments were provived
-        var file = '';
-        switch(args)
+        //Check to make sure the material the person is searching for actually exists
+        if(!InventionMaterialInformation.hasOwnProperty(args))
         {
-            case 'base parts':
-                file = InventionMaterialImages.BaseParts;
-                break;
-            case 'blade parts':
-                file = InventionMaterialImages.BladeParts;
-                break;
-            case 'clear parts':
-                file = InventionMaterialImages.ClearParts;
-                break;
-            case 'connector parts':
-                file = InventionMaterialImages.ConnectorParts;
-                break;
-            case 'cover parts':
-                file = InventionMaterialImages.CoverParts;
-                break;
-            case 'crafted parts':
-                file = InventionMaterialImages.CraftedParts;
-                break;
-            case 'crystal parts':
-                file = InventionMaterialImages.CrystalParts;
-                break;
-            case 'deflecting parts':
-                file = InventionMaterialImages.DeflectingParts;
-                break;
-            case 'delicate parts':
-                file = InventionMaterialImages.DelicateParts;
-                break;
-            case 'flexible parts':
-                file = InventionMaterialImages.FlexibleParts;
-                break;
-            case 'head parts':
-                file = InventionMaterialImages.HeadParts;
-                break;
-            case 'magic parts':
-                file = InventionMaterialImages.MagicParts;
-                break;
-            case 'metallic parts':
-                file = InventionMaterialImages.MetallicParts;
-                break;
-            case 'organic parts':
-                file = InventionMaterialImages.OrganicParts;
-                break;
-            case 'padded parts':
-                file = InventionMaterialImages.PaddedParts;
-                break;
-            case 'plated parts':
-                file = InventionMaterialImages.PlatedParts;
-                break;
-            case 'simple parts':
-                file = InventionMaterialImages.SimpleParts;
-                break;
-            case 'smooth parts':
-                file = InventionMaterialImages.SmoothParts;
-                break;
-            case 'spiked parts':
-                file = InventionMaterialImages.SpikedParts;
-                break;
-            case 'spiritual parts':
-                file = InventionMaterialImages.SpiritualParts;
-                break;
-            case 'stave parts':
-                file = InventionMaterialImages.StaveParts;
-                break;
-            case 'tensile parts':
-                file = InventionMaterialImages.TensileParts;
-                break;
-        }
-
-        //If we found a file matching the given name display it to the user
-        if(file != '')
-        {
-            msg.channel.send('', {
-                file: file
-            });
+            //If this code is reached, no valid material name was given
+            msg.channel.send(RunescapeErrorMessages.InvalidMaterialName);
             return;
         }
 
-        //If this code is reached, no valid material name was given
-        msg.channel.send(RunescapeErrorMessages.InvalidMaterialName);
-        return;
+        //The material exists, lets grab its relevant information to be displayed
+        var MaterialInformation = InventionMaterialInformation[args];
+        var WikiLink = MaterialInformation.wiki;
+        var DissassemblyLink = MaterialInformation.dissassembly;
+        var ImageLink = MaterialInformation.image;
+
+        var Description = '[wiki page](' + WikiLink + ')\n[dissassembly page](' + DissassemblyLink + ')';
+
+        msg.channel.send({embed: {
+            description: Description,
+            color: 486109,
+            image: {
+                url: ImageLink
+            }
+        }});
     }
 }
 
