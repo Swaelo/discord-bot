@@ -5,5 +5,7 @@
     "InvalidMaterialName" : "ERROR: No material with that name that I am aware of.",
     "TooManyArguments" : "ERROR: Too many arguments used with this command.",
     "NotEnoughArguments" : "ERROR: Not enough arguments used with this command.",
+    "InvalidArgCounter" : "ERROR: You passed the wrong number of arguments with this commands.",
+    "UnknownCrop" : "ERROR: I dont have the correct information to keep track of that type of crop growth, sorry!",
     "UnknownReminderType" : "ERROR: I don't know how to set that kind of reminder."
 }

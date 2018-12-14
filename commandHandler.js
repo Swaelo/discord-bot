@@ -1,37 +1,38 @@
+//The command handler manages all of the command groups which have been added and dishes out
+//user input strings to the correct command functions
 class CommandHandler
 {
-    constructor()
+  //constructor
+  constructor()
+  {
+      this.Prefix = '*';
+      this.CommandGroups = [];
+  }
+  
+  //Adds a new group of commands to the handler
+  RegisterGroup(NewGroup)
+  {
+    this.CommandGroups.push(NewGroup);
+  }
+  
+  //Every message from the chat is passed to this function, then it passes the input on to the
+  //correct command functions if it matches what it should be for that command
+  HandleCommand(UserMessage)
+  {
+    //Ignore any messages which dont begin with the specified command prefix
+    if(!UserMessage.content.startsWith(this.Prefix))
+      return;
+    
+    //Loop through each command group that has been added, checking each until we the correct location to send the users input for execution
+    for(var i = 0; i < this.CommandGroups.length; i++)
     {
-        console.log('command handler initialised');
-        this.commandPrefix = '*';
-        this.commandGroups = [];
+      //Check each command group registered to the handler
+      var CommandGroup = this.CommandGroups[i];
+      var CommandHandled = CommandGroup.HandleCommand(UserMessage);
+      //continue checking everything until we find a match
+      if(CommandHandled)
+        return;
     }
-
-    //Adds a group of commands to the handler so they will be called
-    RegisterGroup(NewGroup)
-    {
-        this.commandGroups.push(NewGroup);
-    }
-
-    //Every message in the chat is processed through this command
-    HandleCommand(msg)
-    {
-        //Only pay attention to message that start with our command prefix
-        if(msg.content.startsWith(this.commandPrefix))
-        {
-            //Now loop through each command group, until we find one that can process our command
-            for(var i = 0; i < this.commandGroups.length; i++)
-            {
-                var CommandHandled = this.commandGroups[i].HandleCommand(msg);
-                //If the command was handled then we are finished
-                if(CommandHandled)
-                    return;
-                //Otherwise we will move onto the next command group and try that one
-            }
-            //If none of the command groups worked, then let the user know we couldnt process their command
-            msg.channel.send('Unable to process that command, sorry :(');
-        }
-    }
+  }
 }
-
 module.exports.CommandHandler = CommandHandler;
