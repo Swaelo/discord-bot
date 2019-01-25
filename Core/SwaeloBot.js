@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 //File System is used to save and load extra information saved to the server
 const FileSystem = require('fs');
 //Bots needs an authentication token to connect with the discord API
-var Token = require(__dirname + '/../auth.json');
+//var Token = require(__dirname + '/../auth.json');
 //We use the server info class to load and save files, track everyones farming timers etc
 var ServerInfo = require(__dirname + '/ServerInfo.js');
 
@@ -29,8 +29,8 @@ class SwaeloBot
 
           //check farming timers every X milliseconds
           setInterval(() => {
-              global.FarmingCommands.CheckCropTimers();
-          }, 60000);
+              global.FarmingCommands.CheckAllTimers();
+          }, 3000);
       });
 
       //define on message recieved event
@@ -41,7 +41,7 @@ class SwaeloBot
 
   Login()
   {
-      this.client.login(Token.TOKEN)
+      this.client.login(TOKEN_GOES_HERE)   //put your bots token here
       .then(console.log('connecting...'))
       .catch(console.error);
   }

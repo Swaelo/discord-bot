@@ -37,33 +37,56 @@ class ServerInfo
         //Load the save file in
         var SaveFile = require(FileName);
 
-        //Extract the song list
-        var FileSongList = SaveFile.songs;
+        //Extract the set of crop timers and animal timers
+        var FileCropLogList = SaveFile.crops;
+        var FileAnimalLogList = SaveFile.animals;
+        var CropLogs = FileCropLogList.split(' ');
+        var AnimalLogs = FileAnimalLogList.split(' ');
 
-        //Extract the farming logs
-        var FileFarmingLogList = SaveFile.logs;
-        //each farming log is seperated by a space
-        var FarmingLogs = FileFarmingLogList.split(' ');
-        for(var i = 0; i < FarmingLogs.length; i++)
+        //Loop through the set of crop timers
+        for(var CropLogIterator = 0; CropLogIterator < CropLogs.length; CropLogIterator++)
         {
-            //inside each of the farming logs, each timer is seperated by a dash
-            //we need to create a new farming log and place all the data into it as its loaded
+            //Get the current list of crop timers from the complete set as we loop through the list
+            var CropTimers = CropLogs[CropLogIterator].split('-');
+            //Find the owner of this crop timer
+            var CropOwner = CropTimers[0];
+            CropTimers.shift();
+            //Create a new farming log object to store all of this users crop timers
             var NewFarmingLog = new FarmingLog.FarmingLog(0);
-            var LogTimers = FarmingLogs[i].split('-');
-            //the first is the user ID, then everything after that is another timer
-            NewFarmingLog.UserID = LogTimers[0];
-            LogTimers.shift();
-            //go through each timer we need to keep track of
-            for(var j = 0; j < LogTimers.length; j++)
+            NewFarmingLog.UserID = CropOwner;
+            //Loop through each crop timer stored for this user
+            for(var CropTimerIterator = 0; CropTimerIterator < CropTimers.length; CropTimerIterator++)
             {
-                //the herb type and timer are split by a :
-                var TimerSplit = LogTimers[j].split(':');
-                var TimerType = TimerSplit[0];
-                var TimerValue = TimerSplit[1];
-                NewFarmingLog.SetTimer(TimerType, TimerValue);
+                //Extract the info for each crop timer and add them all into the users farming log object
+                var TimerSplit = CropTimers[CropTimerIterator].split(':');
+                var CropType = TimerSplit[0];
+                var CropTimer = TimerSplit[1];
+                NewFarmingLog.SetCropTimer(CropType, CropTimer);
             }
-            //Add this new farming log into the server info here
+            //As the farming log object has been filled with all the users crop timers, store it with the rest of the farming logs
             this.FarmingLogs.push(NewFarmingLog);
+        }
+
+        //Loop through the set of animal timers
+        for(var AnimalLogIterator = 0; AnimalLogIterator < AnimalLogs.length; AnimalLogIterator++)
+        {
+            //Get the current list of animal timers from the complete set as we loop through the list
+            var AnimalTimers = AnimalLogs[AnimalLogIterator].split('-');
+            //Find the owner of this animal timer
+            var AnimalOwner = AnimalTimers[0];
+            AnimalTimers.shift();
+            //Try to find an already existing farming log object related to this user id, if it doesnt exist a newly created log will be returned which has already been stored
+            var CurrentFarmingLog = this.GetFarmingTimerLog(AnimalOwner);
+            //Loop through each animal timer stored for this user
+            for(var AnimalTimerIterator = 0; AnimalTimerIterator < AnimalTimers.length; AnimalTimerIterator++)
+            {
+                //Extract the info for each animal timer and add them all into the users farming log object
+                var TimerSplit = AnimalTimers[AnimalTimerIterator].split(':');
+                var AnimalType = TimerSplit[0];
+                var AnimalTimer = TimerSplit[1];
+                CurrentFarmingLog.SetAnimalTimer(AnimalType, AnimalTimer);
+            }
+            //If
         }
     }
 
@@ -72,7 +95,7 @@ class ServerInfo
         //Figure out what the filename would be for this server backup file
         var FileName = (__dirname + '/../SaveFiles/' + this.ServerID + '.json');
 
-        //Grab all the info we need to put into the save file
+        //Add whatever songs are in the current song list into the save data file
         var Songs = '';
         for(var i = 0; i < this.SongList.length; i++)
         {
@@ -80,28 +103,52 @@ class ServerInfo
             if(i < this.SongList.length - 1)
                 Songs += ' ';
         }
+
+        //Save all of the farming logs each containing crop timers and animal timers for each seperate user and store it all in the servers save data backup file
         var Timers = '';
-        for(var i = 0; i < this.FarmingLogs.length; i++)
+        for(var FarmingLogIterator = 0; FarmingLogIterator < this.FarmingLogs.length; FarmingLogIterator++)
         {
-            var FarmingLog = this.FarmingLogs[i];
-            var LogInfo = FarmingLog.UserID + '-';
-            for(var j = 0; j < FarmingLog.CropTimers.length; j++)
+            //Get the info regarding each farming log stored within this server as we loop through the entire list of them
+            var FarmingLog = this.FarmingLogs[FarmingLogIterator];
+
+            //Get the complete list of crop times stored within the current farming log in the list as we loop through them all
+            var CropTimers = FarmingLog.CropTimers;
+            //First we will loop through the crop timers, appending to a CropTimerString object the current status of each crop timer
+            var CropTimerString = FarmingLog.UserID + '-';
+            for(var CropTimerIterator = 0; CropTimerIterator < CropTimers.length; CropTimerIterator++)
             {
-                var FarmingTimer = FarmingLog.CropTimers[j];
-                var TimerInfo = (FarmingTimer.CropName + ':' + FarmingTimer.Timer);
-                LogInfo += TimerInfo;
-                if(j < FarmingLog.CropTimers.length - 1)
-                    LogInfo += '-';
+                //Get the info regarding the current crop timer we are checking and append it onto the CropTimerString object
+                var CropTimer = CropTimers[CropTimerIterator];
+                CropTimerString += (CropTimer.CropName + ':' + CropTimer.Timer);
+
+                //Space out each crop timer value with a - so they dont get mixed up together
+                if(CropTimerIterator < CropTimers.length - 1)
+                    CropTimerString += '-';
             }
-            Timers += LogInfo;
-            if(i < this.FarmingLogs.length - 1)
-                Timers += ' ';
+
+            //Get the complete list of animal times stored within the current farming log in the list as we loop through them all
+            var AnimalTimers = FarmingLog.AnimalTimers;
+            //Second we will loop through the animal timers, appending to a AnimalTimerString object the current status of each animal timer
+            var AnimalTimerString = FarmingLog.UserID + '-';
+            for(var AnimalTimerIterator = 0; AnimalTimerIterator < AnimalTimers.length; AnimalTimerIterator++)
+            {
+                //Get the info regarding the current animal timer we are checking and append it onto the AnimalTimerString object
+                var AnimalTimer = AnimalTimers[AnimalTimerIterator];
+                AnimalTimerString += (AnimalTimer.AnimalName + ':' + AnimalTimer.Timer);
+
+                //Space out each animal timer value with a - so they dont get mixed up together
+                if(AnimalTimerIterator < AnimalTimers.length - 1)
+                    AnimalTimerString += '-';
+            }
         }
+
         //structure this data properly so it can be saved in json file format
         var ServerData = {
             songs: Songs,
-            logs: Timers
+            crops: CropTimerString,
+            animals: AnimalTimerString
         };
+        //Finally we have all the data ready, save it into our backup data file, then register a callback function to trigger once the file has been saved correctly
         var SaveData = JSON.stringify(ServerData);
         FileSystem.writeFile(FileName, SaveData, 'utf8', this.BackupComplete);
         return;
@@ -110,7 +157,27 @@ class ServerInfo
     //callback event when server back is complete
     BackupComplete()
     {
-        console.log('server info backed up');
+        console.log('server info backed up successfully ');
+    }
+
+    //Returns the farming timer log for the requested discord user ID
+    GetFarmingTimerLog(UserID)
+    {
+        //Loop through all of the farming logs currently being stored by this server
+        var FarmingLogCount = this.FarmingLogs.length;
+        for(var FarmingLogIterator = 0; FarmingLogIterator < FarmingLogCount; FarmingLogIterator++)
+        {
+            //Get the relevant information regarding the currently farming log that we are checking
+            var CurrentFarmingLog = this.FarmingLogs[FarmingLogIterator];
+            //If this farming log belongs to the user who's log we are searching for then return that log object
+            if(CurrentFarmingLog.UserID == UserID)
+                return CurrentFarmingLog;
+        }
+        //If there was no active farming log that already exists for the given UserID, create a new log for them, store it and return it
+        var NewFarmingLog = new FarmingLog.FarmingLog(0);
+        NewFarmingLog.UserID = UserID;
+        this.FarmingLogs.push(NewFarmingLog);
+        return NewFarmingLog;
     }
 
     //Returns the farming timer log for the requested discord user

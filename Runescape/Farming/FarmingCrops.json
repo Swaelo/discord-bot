@@ -3,54 +3,66 @@
         "growthTime" : "4800000",
         "plantMessage" : "I started a new herb timer, ill message you when theyre ready. (approx 1h20m)",
         "growingMessage" : "The herbs you planted earlier arent ready yet.",
-        "harvestMessage" : "Your herbs should be ready for harvest now!"
+        "harvestMessage" : "Your herbs should be ready for harvest now!",
+        "time taken" : "5-8 minutes",
+        "profit expected" : "1-2m",
+        "video guide" : "",
+        "tips" : "Use the following items to increase the amount of herbs you get each harvest: Magic secateurs from Fairy Tale I - Growing Pains which boosts yield 10%, Greenfingers aura which boosts yield 3%, 5%, 7%, 10%, or 15% depending on tier, Juju farming potion from Herblore Habitat, which gives a 33% chance of picking double herbs, effectively increasing yield by 33%, do not use the farming skillcape perk because when this effect procs instantly harvesting all the herbs at once those herbs will have no chance at being doubled from the juju potion effect, Scroll of life, which gives a 10% chance of returning your seed after you've harvested it, wear the crop farmers outfit or master farmers outfit from the player owned farm for 10% chance to harvest more herbs, The hard Wilderness Tasks will make the patch disease-free, increasing your overall profits, you can use the wilderness sword to teleport directly to this patch in the wilderness, it is HIGHLY recommended that you grow Bloodweed seeds in this patch as this is the only patch in the game they can be grown at and they sell for extremely high prices on the GE (harvest the 1 bloodweed patch gives the same amount of profit as harvesting 6-8 toadflax patches), ultracompost is the best compost in the game, always use these as is will prevent your crops from becoming diseased and even further increase the amount of herbs you will collect from each harvest. 92 Farming is needed to collect the dragon dung in order to make the ultracompost yourself, until then they can be purchased from the Grand Exchange, they are expensive but definitely they will more than pay for themselves.",
+        "info" : "Farming grimy toadflax (a 1 patch of bloodwood) can be a very profitable way to spend a few minutes at a time, repeatable every 80 minutes"
     },
     "morchella" : {
         "growthTime" : "14400000",
         "plantMessage" : "I started a new mushroom timer, ill message you when theyre ready. (approx 4h)",
         "growingMessage" : "The mushrooms you planted earlier arent ready yet.",
-        "harvestMessage" : "Your mushrooms should be ready for harvest now!"
+        "harvestMessage" : "Your mushrooms should be ready for harvest now!",
+        "time taken" : "2 minutes",
+        "profit expected" : "75-150k",
+        "video guide" : "",
+        "tips" : "Use Fairy Ring Code CKS to teleport directly to the Canifis Mushroom Patch, then the Tiranwynn Lodestone to arrive near the 2nd patch. The Morytania achievements help immensely for growing morchella mushrooms -- after completing the Medium achievements, the Morytania patch will be immune from disease. Tiranwynn tasks have no such effect on the Isafdar patch, so the highest level of compost you have available should always be used on this patch.",
+        "info" : "There are two mushroom patches in the game, every 240 minutes each patch can be harvested to recieve 36 morchella mushroom. Take 2 morchella mushroom spore and 2 compost with you to replant them as you go."
     },
     "grapevine" : {
         "growthTime" : "4800000",
         "plantMessage" : "I started a new grapevine timer, ill message you when theyre ready. (approx 1h20m)",
         "growingMessage" : "The grapes you planted earlier are still growing, be patient.",
-        "harvestMessage" : "Your grapevines have matured! Time to start picking :)"
+        "harvestMessage" : "Your grapevines have matured! Time to start picking :)",
+        "time taken" : "3-5 minutes",
+        "profit expected" : "about 800k",
+        "video guide" : "",
+        "tips" : "Wearing a Grace of the Elves necklace charged with signs of the porter will cause most of your grapes to be sent directly to your bank as they are harvested. Using this will allow you to grab all the items you need to bring to harvest and replant every patch in a single trip without needing to bank midway.  If you have any Weapons, Combat Equipment or an active Summoning Familiar the monks will not take you to Entrana, there is a bank deposit box right next to the monks where you can deposit any items they wont allow you to bring. Usually I will have my Mobile Perked Wilderness Sword and Farming Cape with me that I deposit back into my bank here before heading to Entrana (I do Entrana last for this reason). The grapes which you harvest from the grapevines are untradable - use these grapes on jugs of water to turn them into wines which can be sold for a very high price on the GE",
+        "info" : "Once you reach farming level 95 you can start growing grapevines. Grapevines are grown on Hops patches of which there are 4, located North of the Lumbridge Farm, North of McGrubors Wood, in the town of Yanille and on the island of Entrana. "
     },
     "barberry" : {
         "growthTime" : "12000000",
         "plantMessage" : "I started a new barberry bush timer, ill message you when theyre ready. (approx 3h20m)",
         "growingMessage" : "The barberry bushes you planted earlier arent ready yet.",
-        "harvestMessage" : "Your barberry bushes are ready to be picked!"
+        "harvestMessage" : "Your barberry bushes are ready to be picked!",
+        "time taken" : "",
+        "profit expected" : "No items are recieved from the harvest, but you get a good amount of agility experience.",
+        "video guide" : "",
+        "tips" : "Barberry Bushes are great to grow as they award an good amount of agility experience when harvested. This is great if you hate training agility as much as I do.",
+        "info" : "You can start growing Barberry Bushes once you reach Farming level 77. Each Bush can be protected by paying a farmer 15 Hammerstone Hops. These bushes take 3 hours and 20 minutes to fully grow."
     },
     "bloodwood" : {
         "growthTime" : "21600000",
         "plantMessage" : "I started a new bloodwood tree regrowth timer, ill message you when theyre ready. (approx 6h)",
         "growingMessage" : "The Bloodwood trees you cut down earlier havnt grown back yet.",
-        "harvestMessage" : "The Bloodwood Trees you cut down earlier have grown back!"
+        "harvestMessage" : "The Bloodwood Trees you cut down earlier have grown back!",
+        "time taken" : "10-15 minutes to cut down all 8 Bloodwood Trees, add Gem Tips to them all and then enchant them.",
+        "profit expected" : "1m minimum, up to 3m+, the amount of bolts you get per run can vary drastically. Sometimes I end up with only 300-400 bolts and other times I have ended up with over 1k from a single run.",
+        "video guide" : "",
+        "tips" : "Using a Crystal Hatchet with Honed 5 Perk to cut the trees, wearing the Ring of Whispers from Sliskes Endgame, summoning a Beaver Familiar, activating Legendary Lumberjack Aura, boosting your woodcutting level with a god banner, drinking a perfect woodcutting juju and wearing the Natures Sentinel Outfit are all methods that can be used to increase the amount of logs you get from each tree. All of these methods stack on top of each other so use every method available to you.  When you have finished cutting down every tree and have your bakriminel bolts, an excellent way to further increase your profit is to place down a portable fletcher and use this with Ruby bolt tips to create ruby bakriminel bolts, then check your bank and there will be some bonus bakriminel bolts in there from using the portable fletcher, tip these too. Once you have finished adding ruby tips to all of your bolts grab out a bunch of Fire, Blood and Cosmic runes and use these to enchant all of the bolts, when you finally end up with Ruby bakriminel bolts (e) sell these on the GE for a huge profit. (watch the video guide to learn how to enchant the bolts extremely quickly). Using all of the boosts gives a 40-42% boost to gathering, +7 level boost, 15% chance to not deplete resources, and a 10% chance to save 10 Bakriminal Bolts when adding gem bolt tips.",
+        "info" : "The bloodwood tree is a tree that provides bloodwood logs, used in making bakriminel bolts. This requires level 93 Fletching, which may be assisted. The logs and bolt shafts themselves cannot be taken too far from the tree, or they will turn into dust, so Bakriminel Bolt Tips (purchased from Mami Rimba in Edgeville) must be taken with you, each time you finish cutting a tree you must turn the logs into bolt shafts, then tip the bolt shafts before you move away. There are 8 Bloodwood Trees located across Gielinor. The first is South of the Pirates Hideout, the second is North-East of the Demonic Ruins, the third is next to the Chaos Temple, the fourth is in the Soul Wars lobby area, the fifth is on the Ritual Plateau (use fairy code DKQ then exit the cave and head west), the sixth is near the Darkmeyer Arboretum which requires completion of The Branches of Darkmeyer quest (use your Drakans Medallion option 4, then exit the door and the tree is immediately south), and the 6th and final tree is located in the Goraji Resource Dungeon (in the Meilyr Clan District of Prifddinas) requiring 95 dungeoneering to enter. These trees take 6 hours to regrow at which point they can all be cut down again."
     },
     "coconut" : {
         "growthTime" : "16200000",
         "plantMessage" : "I started a new coconut regrowth timer, ill message you when theyre ready. (approx 4h30m)",
         "growingMessage" : "The coconuts you picked earlier havnt finished growing back yet.",
-        "harvestMessage" : "A new batch of coconuts are ready to be picked!"
-    },
-    "sweetcorn" : {
-        "growthTime" : "3000000",
-        "plantMessage" : "I started a new sweetcorn timer, ill message you when theyre ready. (approx 50m)",
-        "growingMessage" : "The sweetcorn you planted earlier arent ready for harvest yet.",
-        "harvestMessage" : "Your sweetcorn are ready to be harvested now!"
-    },
-    "tester" : {
-        "growthTime" : "3000",
-        "plantMessage" : "fast grow debug crop timer started",
-        "growingMessage"  : "debug crop still growing",
-        "harvestMessage" : "debug crop ready for harvest"
-    },
-    "cactus" : {
-        "growthTime" : "4500000",
-        "plantMessage" : "I started a new cactus spine regrowth timer, ill message you when theyre ready to be picked again. (approx 1h15m)",
-        "growingMessage" : "The cactus spines you picked earlier havnt had enough time to regrow yet.",
-        "harvestMessage" : "The cactus spines are ready to be harvested again!"
+        "harvestMessage" : "A new batch of coconuts are ready to be picked!",
+        "time taken" : "about 5 minutes",
+        "profit expected" : "250-300k",
+        "video guide" : "",
+        "tips" : "Bring a Giant Ent Summoning Familiar which gives a passive 50% chance to recieve 2 coconuts instead of 1 every time you collect 1. If you have a farming skillcape do not wear it as if the skillcape perk procs, instantly harvesting all of the trees coconuts, the instantly harvested coconuts have no chance of being double from the familiar.",
+        "info" : "Coconuts grow on Palm Trees, they are used to make coconut milk and are also used in high level herblore. They're also used to pay farmers to look after Magic Trees. Fully grown Palm Trees will produce 1 coconut every 45 minutes up to a maximum of 6 coconuts, when a tree has 6 coconuts it will stop growing any more until they are picked from the tree. There are 7 Fruit Tree patches located across Gielinor, the 1st is at the Gnome Stronghold, the 2nd is at West of the Tree Gnome Village maze, the 3rd is easy of Catherby on the shoreline, the 4th is north of Brimhaven on the shoreline, the 5th is in Lletya, the 6th is at the Herblore Habitat and the 7th and final patch is in the North / NorthEast section of the Meilyr Clan District in Prifddinas."
     }
 }

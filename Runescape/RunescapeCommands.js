@@ -15,7 +15,7 @@ class RunescapeCommands extends CommandGroup.CommandGroup
     var Farming = new FarmingCommands.FarmingCommands();
     global.FarmingCommands = Farming;
     this.AddNewCommand(Farming);
-    
+
     //citadel commands to help track who has capped each week
     //this.AddNewCommand(new CitadelCommands.CitadelCommands());
   }

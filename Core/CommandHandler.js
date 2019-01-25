@@ -5,7 +5,7 @@ class CommandHandler
   //constructor
   constructor()
   {
-      this.Prefix = '$';
+      this.Prefix = '*';
       this.CommandGroups = [];
   }
 

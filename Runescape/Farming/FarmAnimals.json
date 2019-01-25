@@ -1,0 +1,72 @@
+{
+    "rabbit" : {
+      "adolescentGrowthTime" : "960000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a rabbit growth timer, ill message you when they reach the adolescent stage (approx 16m)",
+      "growingMessage" : "The baby rabbits you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The baby rabbits you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Baby to adolescent: 16 minutes. Adolescent to adult: 28 minutes. Adult to elder: 36 minutes. Total time to elder: 80 minutes."
+    },
+    "chicken" : {
+      "adolescentGrowthTime" : "3000000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a chicken egg growth timer, ill message you when they reach the adolescent stage (approx 50m)",
+      "growingMessage" : "The chicken eggs you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The chicken eggs you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Egg to Baby: 20 minutes. Baby to adolescent: 30 minutes. Adolescent to adult: 60 minutes. Adult to elder: 90 minutes. Total time to elder: 3 hours and 20 minutes."
+    },
+    "chinchompa" : {
+      "adolescentGrowthTime" : "28800000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a chinchompa growth timer, ill message you when they reach the adolescent stage (approx 8 hours)",
+      "growingMessage" : "The chinchompas you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The baby chinchompas you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Baby to adolescent: 8 hours. Adolescent to adult: 14 hours. Adult to elder: 18 hours. Total time to elder: 40 hours."
+    },
+    "sheep" : {
+      "adolescentGrowthTime" : "1800000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a sheep growth timer, ill message you when they reach the adolescent stage (approx 30 mins)",
+      "growingMessage" : "The sheep you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The baby sheep you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Baby to adolescent: 30 minutes. Adolescent to adult: 52.5 minutes. Adult to elder: 67.5 minutes. Total time to elder: 2 hours and 30 minutes."
+    },
+    "spider" : {
+      "adolescentGrowthTime" : "18000000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a spider growth timer, ill message you when they reach the adolescent stage (approx 5 hours)",
+      "growingMessage" : "The spiders you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The spider eggs you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Egg to Baby: 2 hours. Baby to adolescent: 3 hours. Adolescent to adult: 6 hours. Adult to elder: 9 hours. Total time to elder: 20 hours."
+    },
+    "zygomite" : {
+      "adolescentGrowthTime" : "57600000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a zygomite growth timer, ill message you when they reach the adolescent stage (approx 16 hours)",
+      "growingMessage" : "The zygomites you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The baby zygomites you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Baby to adolescent: 16 hours. Adolescent to adult: 28 hours. Adult to elder: 36 hours. Total time to elder: 80 hours."
+    },
+    "cow" : {
+      "adolescentGrowthTime" : "4800000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a cow growth timer, ill message you when they reach the adolescent stage (approx 80 mins)",
+      "growingMessage" : "The cows you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The baby cows you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Baby to adolescent: 1 hour and 20 minutes. Adolescent to adult: 2 hours and 20 minutes. Adult to elder: 3 hours. Total time to elder: 6 hours and 40 minutes"
+    },
+    "yak" : {
+      "adolescentGrowthTime" : "57600000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a yak growth timer, ill message you when they reach the adolescent stage (approx 16 hours)",
+      "growingMessage" : "The yaks you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The baby yaks you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Baby to adolescent: 16 hours. Adolescent to adult: 1 day and 4 hours. Adult to elder: 1 day and 12 hours. Total time to elder: 3 days and 8 hours."
+    },
+    "dragon" : {
+      "adolescentGrowthTime" : "144000000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a dragon growth timer, ill message you when they reach the adolescent stage (approx 40 hours)",
+      "growingMessage" : "The dragons you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The dragon eggs you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Egg to Baby: 16 hours. Baby to adolescent: 1 day. Adolescent to adult: 2 days. Adult to elder: 3 days. Total time to elder: 6 days and 16 hours minutes."
+    },
+    "test" : {
+      "adolescentGrowthTime" : "10000",
+      "adolesentGrowthTimerStartedMessage" : "Starting a test animal growth timer, ill message you when they reach the adolescent stage (approx 10 secs)",
+      "growingMessage" : "The test you started earlier havnt reached adolscence yet",
+      "adolescenceReachedMessage" : "The test you started earlier have reached adolscence, take them out of your farm now for maximum beans!",
+      "time taken" : "Egg to Baby: 16 hours. Baby to adolescent: 1 day. Adolescent to adult: 2 days. Adult to elder: 3 days. Total time to elder: 6 days and 16 hours minutes."
+    }
+}
