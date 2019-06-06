@@ -19,6 +19,7 @@ class ServerInfo
 
         //Info regarding active music playback and the list of songs we are playing
         this.PlayingMusic = false; //is the bot currently playing music for anyone
+        this.PlayingRadio = false; //is the bot currently playing radio for people
         this.MusicPaused = false; //is the currently song paused or not
         this.SongList = []; //the complete list of songs that have been requested so far
         this.Dispatcher = null; //dispatcher for outputting youtube audio to the voice chat

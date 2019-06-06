@@ -58,6 +58,9 @@ class MusicCommands extends Command.Command
     case 'list':
         this.ShowList(UserMessage);
         return;
+    case 'radio':
+        this.StartRadio(UserMessage);
+        return;
     }
   }
 
@@ -90,7 +93,7 @@ class MusicCommands extends Command.Command
               CurrentServer.VoiceConnection = connection;
               CurrentServer.Dispatcher = CurrentServer.Server.dispatcher;
               return;
-          }).catch(function() {
+        }).catch(function() {
               //move fail
               Reply.edit('Something went wrong while trying to move to ' + UserMessage.author.username + 's voice channel');
               CurrentServer.InVoice = false;
@@ -106,11 +109,11 @@ class MusicCommands extends Command.Command
           CurrentServer.VoiceChannel = UserMessage.member.voiceChannel;
           CurrentServer.VoiceConnection = connection;
           return;
-      }).catch(function() {
-          Reply.edit('Something went wrong while trying to join ' + UserMessage.author.username + 's voice channel');
-          CurrentServer.InVoice = false;
-          return;
-      });
+    }).catch(e => {
+        Reply.edit('Something went wrong while trying to join ' + UserMessage.author.username + 's voice channel. Error Message: ' + e);
+        CurrentServer.InVoice = false;
+        return;
+    });
   }
 
   async LeaveChannel(UserMessage)
@@ -128,8 +131,63 @@ class MusicCommands extends Command.Command
       CurrentServer.InVoice = false;
       CurrentServer.SongList = [];
       CurrentServer.PlayingMusic = false;
+      CurrentServer.PlayingRadio = false;
       CurrentServer.VoiceConnection.disconnect();
-      Reply.edit('Leave the voice channel.');
+      Reply.edit('Left the voice channel.');
+  }
+
+  async StartRadio(UserMessage)
+  {
+      //Store current server info
+      var CurrentServer = this.FindServerByID(UserMessage.guild.id);
+      var Reply = await UserMessage.channel.send('Starting radio playback...');
+
+      //Ignore request if the bot and user arent in the same voice channel
+      if(!UserMessage.member.voiceChannel || !CurrentServer.InVoice || UserMessage.member.voiceChannel != CurrentServer.VoiceChannel)
+      {
+          Reply.edit('ERROR: We need to both be connected to the same voice channel for me to start radio playback.');
+          return;
+      }
+
+      //Ignore the request if we are already playing some music request
+      if(CurrentServer.PlayingMusic)
+      {
+          Reply.edit('Please allow current playlist to finish before starting radio playback.');
+          return;
+      }
+
+      //Randomly select a radio song to play
+      var RadioSelection = Math.floor(Math.random() * 53);
+      RadioSelection += 1;
+
+      //Start playing the song that was selected
+      Reply.edit('Now playing: musicForProgramming ' + RadioSelection);
+      CurrentServer.PlayingRadio = true;
+      CurrentServer.Dispatcher = CurrentServer.VoiceConnection.playFile('./RadioFiles/' + RadioSelection + '.mp3');
+
+      //Register callback function to trigger when this song finishes, starting another one immediately
+      CurrentServer.Dispatcher.on('end', function() {
+          global.MusicPlayer.NextRadio(UserMessage);
+      });
+  }
+
+  NextRadio(UserMessage)
+  {
+      //Get the server info
+      var CurrentServer = this.FindServerByID(UserMessage.guild.id);
+
+      //Select a new radio song to play
+      var RadioSelection = Math.floor(Math.randon() * 53);
+      RadioSelection += 1;
+
+      //Start playing and announce the newly selected song
+      UserMessage.channel.send('Now playing: musicForProgramming ' + RadioSelection);
+      CurrentServer.Dispatcher = CurrentServer.VoiceConnection.playFile('./RadioFiles/' + RadioSelection + '.mp3');
+
+      //Re-register this callback again for when the song completes
+      CurrentServer.Dispatcher.on('end', function() {
+          global.MusicPlayer.NextRadio(UserMessage);
+      });
   }
 
   async PlaySong(UserMessage, CommandArguments)
@@ -159,6 +217,13 @@ class MusicCommands extends Command.Command
       if(!UserMessage.member.voiceChannel || !CurrentServer.InVoice || UserMessage.member.voiceChannel != CurrentServer.VoiceChannel)
       {
           Reply.edit('ERROR: We need to both be connected into the same voice channel for me to play the song for you.');
+          return;
+      }
+
+      //Ignore requests if the bot is already playing radio
+      if(CurrentServer.PlayingRadio)
+      {
+          Reply.edit('Radio playback must be stopped before accepting song requests.');
           return;
       }
 
@@ -230,33 +295,48 @@ class MusicCommands extends Command.Command
       var CurrentServer = this.FindServerByID(UserMessage.guild.id);
 
       //Reject this request if bot not in voice, user not in same voice as bot, or song list empty
-      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel) || !CurrentServer.PlayingMusic)
+      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel))
       {
           Reply.edit('Whoops, we both need to be in the same voice channel to use music commands.');
           return;
       }
 
-      //Tell the dispatcher to end and it will automatically move onto the next song
+      //Ignore the request is nothing is being played
+      if(!CurrentServer.PlayingMusic && !CurrentServer.PlayingRadio)
+      {
+          Reply.edit('There is nothing being played, skip request ignored.');
+          return;
+      }
+
+      //Tell the dispatcher to end and it will automatically move onto the next song request / radio selection
       CurrentServer.Dispatcher.end();
   }
 
   async StopMusic(UserMessage)
   {
-      var Reply = await UserMessage.channel.send('Stopping all music');
+      var Reply = await UserMessage.channel.send('Stopping all music/radio playback...');
       //Get server info
       var CurrentServer = this.FindServerByID(UserMessage.guild.id);
 
-      //Ignore if bot not in voice, user not in voice, not in same voice, not playing music
-      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel) || !CurrentServer.PlayingMusic)
+      //Ignore if bot not in voice, user not in voice, not in same voice
+      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel))
       {
           Reply.edit('Whoops, we both need to be in the same voice channel to use music commands.');
           return;
       }
 
+      //Ignore if the bot isnt playing music or radio
+      if(!CurrentServer.PlayingMusic && !CurrentServer.PlayingRadio)
+      {
+          Reply.edit('Im not playing any music or radio at the moment.');
+          return;
+      }
+
       CurrentServer.PlayingMusic = false;
+      CurrentServer.PlayingRadio = false;
       CurrentServer.SongList = [];
       CurrentServer.Dispatcher.end();
-      Reply.edit('All music stopped');
+      Reply.edit('All music/radio playback stopped.');
   }
 
   ShowList(UserMessage)
@@ -289,14 +369,21 @@ class MusicCommands extends Command.Command
 
   async PauseSong(UserMessage)
   {
-      var Reply = await UserMessage.channel.send('Pausing the current song...');
+      var Reply = await UserMessage.channel.send('Pausing the current song/radio playback...');
       //Get server info
       var CurrentServer = this.FindServerByID(UserMessage.guild.id);
 
       //ignore request when irrelevant
-      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel) || !CurrentServer.PlayingMusic)
+      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel))
       {
           Reply.edit('Whoops, we both need to be in the same voice channel to use music commands.');
+          return;
+      }
+
+      //Ignore request when neither playing music or radio
+      if(!CurrentServer.PlayingMusic && !CurrentServer.PlayingRadio)
+      {
+          Reply.edit('No music or radio is currently being played.');
           return;
       }
 
@@ -309,33 +396,40 @@ class MusicCommands extends Command.Command
 
       CurrentServer.MusicPaused = true;
       CurrentServer.Dispatcher.pause();
-      Reply.edit('Song paused');
+      Reply.edit('Music/Radio playback paused.');
   }
 
   async ResumeSong(UserMessage)
   {
-      var Reply = await UserMessage.channel.send('Resuming the current song...');
+      var Reply = await UserMessage.channel.send('Resuming the current radio/music playback...');
       //Get server info
       var CurrentServer = this.FindServerByID(UserMessage.guild.id);
 
       //ignore request when irrelevant
-      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel) || !CurrentServer.PlayingMusic)
+      if(!CurrentServer.InVoice || !UserMessage.member.voiceChannel || (CurrentServer.VoiceChannel != UserMessage.member.voiceChannel))
       {
           Reply.edit('Whoops, we both need to be in the same voice channel to use music commands.');
+          return;
+      }
+
+      //Ignore request when playing nothing
+      if(!CurrentServer.PlayingMusic && !CurrentServer.PlayingRadio)
+      {
+          Reply.edit('There isnt anything paused that I can resume playing.');
           return;
       }
 
       //ignore when not paused
       if(!CurrentServer.MusicPaused)
       {
-          Reply.edit('Whoops, the song isnt paused');
+          Reply.edit('Whoops, the current radio/music playback isnt paused.');
           return;
       }
 
       //resume the song
       CurrentServer.MusicPaused = false;
       CurrentServer.Dispatcher.resume();
-      Reply.edit('Song resumed.');
+      Reply.edit('Radio/music playback has been resumed.');
   }
 
   FindServerByID(ServerID)

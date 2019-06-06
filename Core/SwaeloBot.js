@@ -28,9 +28,9 @@ class SwaeloBot
           });
 
           //check farming timers every X milliseconds
-          setInterval(() => {
-              global.FarmingCommands.CheckAllTimers();
-          }, 3000);
+          // setInterval(() => {
+          //     global.FarmingCommands.CheckAllTimers();
+          // }, 3000);
       });
 
       //define on message recieved event
