@@ -177,7 +177,7 @@ class MusicCommands extends Command.Command
       var CurrentServer = this.FindServerByID(UserMessage.guild.id);
 
       //Select a new radio song to play
-      var RadioSelection = Math.floor(Math.randon() * 53);
+      var RadioSelection = Math.floor(Math.random() * 53);
       RadioSelection += 1;
 
       //Start playing and announce the newly selected song
