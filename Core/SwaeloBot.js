@@ -28,9 +28,9 @@ class SwaeloBot
           });
 
           //check farming timers every X milliseconds
-          // setInterval(() => {
-          //     global.FarmingCommands.CheckAllTimers();
-          // }, 3000);
+          setInterval(() => {
+              global.FarmingCommands.CheckAllTimers();
+          }, 3000);
       });
 
       //define on message recieved event
@@ -41,7 +41,7 @@ class SwaeloBot
 
   Login()
   {
-      this.client.login(TOKEN_GOES_HERE)   //put your bots token here
+      this.client.login('NDg4NTU3MzM0Mzc3OTIyNTcw.XSDAWQ.vCSCBRIu-vdftdv0MkvZ6PycaXs')   //put your bots token here
       .then(console.log('connecting...'))
       .catch(console.error);
   }

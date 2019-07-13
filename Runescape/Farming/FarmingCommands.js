@@ -54,6 +54,12 @@ class FarmingCommands extends Command.Command
             case 'animal status':
                 this.DisplayAnimalTimers(UserMessage, Arguments);
                 return;
+            case 'ports timer':
+                this.PortsTimer(UserMessage, Arguments);
+                return;
+            case 'ports status':
+                this.DisplayVoyageTimers(UserMessage, Arguments);
+                return;
         }
     }
 
@@ -142,11 +148,69 @@ class FarmingCommands extends Command.Command
             Reply.edit(LogMessage);
     }
 
+    //Displays the current status of all the users active ports voyage timers
+    async DisplayVoyageTimers(UserMessage, Arguments)
+    {
+        //Let the user know their request has been recieved
+        var Reply = await UserMessage.channel.send('Looking up your ports voyage logs...');
+        
+        //Get all the users current voyage timers
+        var CurrentServer = this.GetServerInfo(UserMessage.guild.id);
+        var FarmingLog = CurrentServer.GetFarmingLog(UserMessage.author);
+        var VoyageTimers = FarmingLog.VoyageTimers;
+
+        //Start a message to display the values of each active voyage timer
+        var LogMessage = ('---' + UserMessage.author.username + 's voyage timers---\n');
+
+        //Loop through all of the users active timers
+        for(var TimerKey in VoyageTimers)
+        {
+            //Get the current values of each timer
+            var CurrentTimer = VoyageTimers[TimerKey];
+            var TimerName = CurrentTimer.ShipName;
+            var TimeLeft = CurrentTimer.Timer - this.GetCurrentTime();
+
+            //Skip inactive timers
+            if(CurrentTimer.Timer == 0)
+                continue;
+            //Add active timers into to the LogMessage
+            else
+            {
+                //Find out how much time it has left
+                var Seconds = TimeLeft / 1000;
+                Seconds = Math.floor(Seconds);
+                var Minutes = Math.floor(Seconds / 60);
+                Seconds -= Math.floor(Minutes * 60);
+                var Hours = Math.floor(Minutes / 60);
+                Minutes -= Math.floor(Hours * 60);
+
+                //Add the info to the list
+                LogMessage += (TimerName + ': ');
+                LogMessage += Hours > 0 ? (Hours + 'h') : '';
+                LogMessage += Minutes + 'm' + Seconds + 's remaining\n';  
+            }
+        }
+
+        //Check there wasnt actually 0 active voyage timers
+        if(LogMessage == ('---' + UserMessage.author.username + 's voyage timers---\n'))
+        {
+            Reply.edit('All ships are in dock.');
+            return;
+        }
+        //Otherwise display the list of current timers to the user
+        else
+        {
+            Reply.edit(LogMessage);
+            return;
+        }
+    }
+
     //Checks all animal timers and all crop timers
     CheckAllTimers()
     {
         this.CheckAnimalTimers();
         this.CheckCropTimers();
+        this.CheckVoyageTimers();
     }
 
     //Checks if any of the current farming animal timers are completed and notifies the user once they are
@@ -195,6 +259,45 @@ class FarmingCommands extends Command.Command
                         CurrentTimer.EndTimer();
                         var TimerOwner = this.FindUser(CurrentLog.UserID);
                         TimerOwner.user.sendMessage(FarmAnimals[CurrentTimer.AnimalName].adolescenceReachedMessage);
+                        CurrentServer.UpdateSaveData();
+                    }
+                }
+            }
+        }
+    }
+
+    //Checks if any of the current ports voyage timers are completed and notifies the user once they are
+    CheckVoyageTimers()
+    {
+        //We need to check each seperate server we are currently connected to
+        for(var ServerIterator = 0; ServerIterator < global.Servers.length; ServerIterator++)
+        {
+            //Get the info on each server in the list, then get each servers set of farming logs
+            var CurrentServer = global.Servers[ServerIterator];
+            var LogList = CurrentServer.FarmingLogs;
+            for(var LogIterator = 0; LogIterator < LogList.length; LogIterator++)
+            {
+                //Get each users voyage timer dictionary and loop through all the timers in it
+                var TimerDictionary = CurrentServer.FarmingLogs[LogIterator].VoyageTimers;
+                for(var TimerKey in TimerDictionary)
+                {
+                    //Get the values of each timer as we loop through them all
+                    var CurrentTimer = TimerDictionary[TimerKey];
+                    var TimerName = CurrentTimer.ShipName;
+                    var TimerValue = CurrentTimer.Timer;
+
+                    //Ignore inactive timers
+                    if(TimerValue == 0)
+                        continue;
+
+                    //Check if active timers are completed yet
+                    var TimeLeft = TimerValue - this.GetCurrentTime();
+                    if(TimeLeft <= 0)
+                    {
+                        //Accounce completed timers to the user, then reset the timer and update the server save file
+                        CurrentTimer.EndTimer();
+                        var TimerOwner = this.FindUser(CurrentTime.UserID);
+                        TimerOwner.user.sendMessage(TimerName + ' has returned from their voyage and is waiting in port.');
                         CurrentServer.UpdateSaveData();
                     }
                 }
@@ -261,6 +364,63 @@ class FarmingCommands extends Command.Command
         }
     }
 
+    async PortsTimer(UserMessage, Arguments)
+    {
+        //Let the user know their request has been recieved
+        var Reply = await UserMessage.channel.send('Settings a new voyage timer for ' + UserMessage.author.username);
+
+        //Ignore this request if the arguments provided are valid
+        var ArgumentSplit = Arguments.split(' ');
+        if(ArgumentSplit.length != 3)
+        {
+            Reply.edit('Incorrect number of arguments provided, correct command syntax looks like this: ``*farming ports timer BoatName 1 30``');
+            return;
+        }
+
+        //Split the arguments apart into their seperate values
+        var BoatName = ArgumentSplit[0];
+        var Hours = ArgumentSplit[1];
+        var Minutes = ArgumentSplit[2];
+
+        //Timers ned to be set with millisend values
+        var TotalSeconds = (Hours * 3600) + (Minutes * 60);
+        var TotalMilliseconds = TotalSeconds * 1000;
+
+        //Get the info on the current server, the users current farming log and the timer for the boat they are using
+        var CurrentServer = this.GetServerInfo(UserMessage.guild.id);
+        var FarmingLog = CurrentServer.GetFarmingLog(UserMessage.author);
+        var VoyageTimer = FarmingLog.GetVoyageTimer(BoatName, TotalMilliseconds);
+
+        //If the voyage timer is at zero we need to reset it
+        if(VoyageTimer.GetTimer() == 0)
+        {
+            VoyageTimer.Override(Milliseconds);
+            Reply.edit(BoatName + ' has left on their voyage. I will remind you when they return in approx ' + Hours + ' hours and ' + Minutes + ' minutes time.');
+            //Update the server save file
+            CurrentServer.UpdateSaveData();
+            return;
+        }
+        //Otherwise we display how much time is remaining on the voyage
+        else
+        {
+            //Figure out how much time is left
+            var TimeLeft = VoyageTimer.GetTimer() - this.GetCurrentTime();
+            var SecondsLeft = TimeLeft / 1000;
+            SecondsLeft = Math.floor(SecondsLeft);
+            var MinutesLeft = Math.floor(SecondsLeft / 60);
+            SecondsLeft -= Math.floor(MinutesLeft * 60);
+            var HoursLeft = Math.floor(MinutesLeft / 60);
+            MinutesLeft -= Math.floor(HoursLeft * 60);
+
+            //Display the remaining time
+            var TimeLeftMessage = (BoatName + ' will return from its voyage in approx ' + HoursLeft + 'h' + MinutesLeft + 'm' + SecondsLeft + 's.');
+            Reply.edit(TimeLeftMessage);
+            //Update the server save file
+            CurrentServer.UpdateSaveData();
+            return;
+        }
+    }
+
     async AnimalTimer(UserMessage, AnimalType)
     {
         var Reply = await UserMessage.channel.send('Setting a new ' + AnimalType + ' farming timer for ' + UserMessage.author.username);
@@ -293,6 +453,8 @@ class FarmingCommands extends Command.Command
             var TimeLeftMessage = (FarmAnimals[AnimalType].growingMessage + '\n');
             TimeLeftMessage += ('This timer will completed in ' + Hours + 'h' + Minutes + 'm' + Seconds + 's.');
             Reply.edit(TimeLeftMessage);
+            //Update the server save file
+            CurrentServer.UpdateSaveData();
             return;
         }
     }
@@ -337,14 +499,16 @@ class FarmingCommands extends Command.Command
             var TimeLeftMessage = (FarmingCrops[CropType].plantMessage + '\n');
             TimeLeftMessage += ('This timer will complete in ' + Hours + 'h' + Minutes + 'm' + Seconds + 's.');
             Reply.edit(TimeLeftMessage);
+            //Update the server save file
+            CurrentServer.UpdateSaveData();
             return;
         }
     }
 
     GetCurrentTime()
     {
-      var CurrentDate = new Date();
-      return CurrentDate.getTime();
+        var CurrentDate = new Date();
+        return CurrentDate.getTime();
     }
 
     //Finds the server info class for the server were connected to

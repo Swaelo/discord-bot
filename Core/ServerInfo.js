@@ -41,8 +41,10 @@ class ServerInfo
         //Extract the set of crop timers and animal timers
         var FileCropLogList = SaveFile.crops;
         var FileAnimalLogList = SaveFile.animals;
+        var FileVoyageLogList = SaveFile.ports;
         var CropLogs = FileCropLogList.split(' ');
         var AnimalLogs = FileAnimalLogList.split(' ');
+        var VoyageLogs = FileVoyageLogList.split(' ');
 
         //Loop through the set of crop timers
         for(var CropLogIterator = 0; CropLogIterator < CropLogs.length; CropLogIterator++)
@@ -87,7 +89,27 @@ class ServerInfo
                 var AnimalTimer = TimerSplit[1];
                 CurrentFarmingLog.SetAnimalTimer(AnimalType, AnimalTimer);
             }
-            //If
+        }
+
+        //Loop through the set of voyage timers
+        for(var VoyageLogIterator = 0; VoyageLogIterator < VoyageLogs.length; VoyageLogIterator++)
+        {
+            //Get the current list of voyage timers from the set as we loop through them all
+            var VoyageTimers = VoyageLogs[VoyageLogIterator].split('-');
+            //Find the owner of each voyage timer
+            var VoyageOwner = VoyageTimers[0];
+            VoyageTimers.shift();
+            //Get this users farming log object
+            var CurrentFarmingLog = this.GetFarmingTimerLog(VoyageOwner);
+            //Loop through each timer stored for this user
+            for(var VoyageTimerIterator = 0; VoyageTimerIterator < VoyageTimers.length; VoyageTimerIterator++)
+            {
+                var TimerSplit = VoyageTimers[VoyageTimerIterator].split(':');
+                var ShipName = TimerSplit[0];
+                var TimerValue = TimerSplit[1];
+                console.log('loading voyage from backup with value ' + TimerValue);
+                CurrentFarmingLog.SetVoyageTimer(ShipName, TimerValue);
+            }
         }
     }
 
@@ -141,13 +163,32 @@ class ServerInfo
                 if(AnimalTimerIterator < AnimalTimers.length - 1)
                     AnimalTimerString += '-';
             }
+
+            //Get the complete list of voyage timers stored within the current farming log
+            var VoyageTimers = FarmingLog.VoyageTimers;
+            //Loop through these timers and create a string containing all their data
+            var VoyageTimerString = FarmingLog.UserID + '-';
+            var TimerCount = Object.keys(VoyageTimers).length;
+            var TimerIter = 1;
+            for(var TimerKey in VoyageTimers)
+            {
+                //Get the info about each timer in the list
+                var CurrentTimer = VoyageTimers[TimerKey];
+                VoyageTimerString += (CurrentTimer.ShipName + ':' + CurrentTimer.VoyageTime);
+
+                //Space each timer out with a - so they dont get mixed
+                if(TimerIter < TimerCount)
+                    VoyageTimerString += '-';
+                TimerIter++;
+            }
         }
 
         //structure this data properly so it can be saved in json file format
         var ServerData = {
             songs: Songs,
             crops: CropTimerString,
-            animals: AnimalTimerString
+            animals: AnimalTimerString,
+            ports: VoyageTimerString
         };
         //Finally we have all the data ready, save it into our backup data file, then register a callback function to trigger once the file has been saved correctly
         var SaveData = JSON.stringify(ServerData);

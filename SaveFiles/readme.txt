@@ -1,0 +1,1 @@
+this file is just here to make sure the SaveFiles folder gets pushed onto the git repo, if the SaveFiles folder is not present when you run the bot it wont be able to backup all its timers.

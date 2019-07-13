@@ -1,5 +1,6 @@
 var CropTimer = require(__dirname + '/CropTimer.js');
 var AnimalTimer = require(__dirname + '/AnimalTimer.js');
+var VoyageTimer = require(__dirname + '/VoyageTimer.js');
 var FarmingCrops = require(__dirname + '/FarmingCrops.json');
 var FarmAnimals = require(__dirname + '/FarmAnimals.json');
 
@@ -28,6 +29,9 @@ class FarmingLog
             var NewAnimalTimer = new AnimalTimer.AnimalTimer(AnimalName, AdolescentGrowTime);
             this.AnimalTimers.push(NewAnimalTimer);
         }
+
+        //create a dictionary of voyage timers for the user
+        this.VoyageTimers = {};
     }
 
     //Finds the farming crop timer tracker for whatever crop name is passed into the function
@@ -60,6 +64,22 @@ class FarmingLog
             if(CurrentAnimalTimer.GetType() == AnimalName)
                 return CurrentAnimalTimer;
         }
+    }
+
+    //Finds the voyage timer tracker for the boat of the given name
+    GetVoyageTimer(BoatName, Milliseconds)
+    {
+        //Check if a voyage timer exists for the given boat name
+        var TimerExists = BoatName in this.VoyageTimers;
+
+        //Return the timer if it already exists
+        if(TimerExists)
+            return this.VoyageTimers[BoatName];
+
+        //Otherwise create a new timer, store it in the dictionary and return it
+        var NewTimer = new VoyageTimer.VoyageTimer(BoatName, Milliseconds);
+        this.VoyageTimers[BoatName] = NewTimer;
+        return NewTimer;
     }
 
     //Overrides the value of a crop timer that we are currently tracking, used by ServerInfo class as it auto loads old save data
@@ -95,6 +115,26 @@ class FarmingLog
                 return;
             }
         }
+    }
+
+    //Overrides the value of a voyage timer that we are currently tracking
+    SetVoyageTimer(BoatName, TimerValue)
+    {
+        //Check if a voyage timer exists for the given boat name already
+        var TimerExists = BoatName in this.VoyageTimers;
+        //Return the timer if it already exists
+        if(TimerExists)
+        {
+            this.VoyageTimers[BoatName].Override(TimerValue);
+            return this.VoyageTimers[BoatName];
+        }
+
+        //Otherwise create a new timer to track this voyage and store it with the rest
+        var NewTimer = new VoyageTimer.VoyageTimer(BoatName, TimerValue);
+        this.VoyageTimers[BoatName] = NewTimer;
+
+        //Finish by returning the new voyage timer that was created
+        return NewTimer;
     }
 }
 
