@@ -67,7 +67,7 @@ class FarmingLog
     }
 
     //Finds the voyage timer tracker for the boat of the given name
-    GetVoyageTimer(BoatName, Milliseconds)
+    GetVoyageTimer(UserID, BoatName, Milliseconds)
     {
         //Check if a voyage timer exists for the given boat name
         var TimerExists = BoatName in this.VoyageTimers;
@@ -77,7 +77,7 @@ class FarmingLog
             return this.VoyageTimers[BoatName];
 
         //Otherwise create a new timer, store it in the dictionary and return it
-        var NewTimer = new VoyageTimer.VoyageTimer(BoatName, Milliseconds);
+        var NewTimer = new VoyageTimer.VoyageTimer(UserID, BoatName, Milliseconds);
         this.VoyageTimers[BoatName] = NewTimer;
         return NewTimer;
     }

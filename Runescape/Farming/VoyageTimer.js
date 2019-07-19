@@ -2,8 +2,9 @@
 class VoyageTimer
 {
     //Constructor that stores the arguments in the object
-    constructor(ShipName, VoyageTime)
+    constructor(UserID, ShipName, VoyageTime)
     {
+        this.UserID = UserID;
         this.ShipName = ShipName;
         this.VoyageTime = VoyageTime;
         var date = new Date();

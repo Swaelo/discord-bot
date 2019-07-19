@@ -296,7 +296,7 @@ class FarmingCommands extends Command.Command
                     {
                         //Accounce completed timers to the user, then reset the timer and update the server save file
                         CurrentTimer.EndTimer();
-                        var TimerOwner = this.FindUser(CurrentTime.UserID);
+                        var TimerOwner = this.FindUser(CurrentTimer.UserID);
                         TimerOwner.user.sendMessage(TimerName + ' has returned from their voyage and is waiting in port.');
                         CurrentServer.UpdateSaveData();
                     }
@@ -317,10 +317,11 @@ class FarmingCommands extends Command.Command
             var CurrentServer = ServerList[ServerIterator];
             var LogList = CurrentServer.FarmingLogs;
             var LogCount = LogList.length;
+            
             for(var LogIterator = 0; LogIterator < LogCount; LogIterator++)
             {
-                var CurrentLog = LogList[LogIterator];
                 //For each farming log, we need to check each farming timer contained within
+                var CurrentLog = LogList[LogIterator];
                 var TimerList = CurrentLog.CropTimers;
                 var TimerCount = TimerList.length;
                 for(var TimerIterator = 0; TimerIterator < TimerCount; TimerIterator++)
@@ -382,14 +383,14 @@ class FarmingCommands extends Command.Command
         var Hours = ArgumentSplit[1];
         var Minutes = ArgumentSplit[2];
 
-        //Timers ned to be set with millisend values
+        //Timers need to be set with millisecond values
         var TotalSeconds = (Hours * 3600) + (Minutes * 60);
         var TotalMilliseconds = TotalSeconds * 1000;
 
         //Get the info on the current server, the users current farming log and the timer for the boat they are using
         var CurrentServer = this.GetServerInfo(UserMessage.guild.id);
         var FarmingLog = CurrentServer.GetFarmingLog(UserMessage.author);
-        var VoyageTimer = FarmingLog.GetVoyageTimer(BoatName, TotalMilliseconds);
+        var VoyageTimer = FarmingLog.GetVoyageTimer(UserMessage.author.id, BoatName, TotalMilliseconds);
 
         //If the voyage timer is at zero we need to reset it
         if(VoyageTimer.GetTimer() == 0)
@@ -476,6 +477,7 @@ class FarmingCommands extends Command.Command
         var FarmingLog = CurrentServer.GetFarmingLog(UserMessage.author);
         //Look in their log for the timer regarding this specific crop
         var CropTimer = FarmingLog.GetCropTimer(CropType);
+
         //If the timer is zero, we reset it
         if(CropTimer.GetTimer() == 0)
         {
@@ -484,11 +486,12 @@ class FarmingCommands extends Command.Command
             //Every time a new timer is reset, we need to resave the server info to file
             CurrentServer.UpdateSaveData();
             return;
-        }//otherwise display time remaining for ongoing timers
+        }
+        //otherwise display time remaining for ongoing timers
         else
         {
+            //Figure out how much time this crop has left to grow
             var TimeLeft = CropTimer.GetTimer() - this.GetCurrentTime();
-
             var Seconds = TimeLeft / 1000;
             Seconds = Math.floor(Seconds);
             var Minutes = Math.floor(Seconds / 60);
@@ -496,9 +499,11 @@ class FarmingCommands extends Command.Command
             var Hours = Math.floor(Minutes / 60);
             Minutes -= Math.floor(Hours * 60);
 
+            //tell the user how much time left until the crop finishes growing
             var TimeLeftMessage = (FarmingCrops[CropType].plantMessage + '\n');
             TimeLeftMessage += ('This timer will complete in ' + Hours + 'h' + Minutes + 'm' + Seconds + 's.');
             Reply.edit(TimeLeftMessage);
+
             //Update the server save file
             CurrentServer.UpdateSaveData();
             return;

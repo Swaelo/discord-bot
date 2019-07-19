@@ -41,7 +41,7 @@ class SwaeloBot
 
   Login()
   {
-      this.client.login('NDg4NTU3MzM0Mzc3OTIyNTcw.XSDAWQ.vCSCBRIu-vdftdv0MkvZ6PycaXs')   //put your bots token here
+      this.client.login('')   //put your bots token here
       .then(console.log('connecting...'))
       .catch(console.error);
   }

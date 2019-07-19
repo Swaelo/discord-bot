@@ -1,7 +1,6 @@
 var CommandGroup = require(__dirname + '/../Core/CommandGroup.js');
 var InventionCommands = require(__dirname + '/Invention/InventionCommands.js');
 var FarmingCommands = require(__dirname + '/Farming/FarmingCommands.js');
-//var CitadelCommands = require(__dirname + '/Citadel/CitadelCommands.js');
 
 class RunescapeCommands extends CommandGroup.CommandGroup
 {
@@ -15,9 +14,6 @@ class RunescapeCommands extends CommandGroup.CommandGroup
     var Farming = new FarmingCommands.FarmingCommands();
     global.FarmingCommands = Farming;
     this.AddNewCommand(Farming);
-
-    //citadel commands to help track who has capped each week
-    //this.AddNewCommand(new CitadelCommands.CitadelCommands());
   }
 }
 
